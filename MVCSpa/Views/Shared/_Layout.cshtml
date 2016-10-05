@@ -21,10 +21,10 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="javascript:getPage('home')">Home</a></li>
-                    <li><a href="javascript:getPage('home','SpaTest')">SpaTest</a></li>
-                    <li><a href="javascript:getPage('home','About')">About</a></li>
-                    <li><a href="javascript:getPage('home','Contact')">Contact</a></li>
+                    <li id="home"><a href="javascript:getPage('home')">Home</a></li>
+                    <li id="SpaTest"><a href="javascript:getPage('home','SpaTest')">SpaTest</a></li>
+                    <li id="About"><a href="javascript:getPage('home','About')">About</a></li>
+                    <li id="Contact"><a href="javascript:getPage('home','Contact')">Contact</a></li>
                 </ul>
             </div>
         </div>
@@ -45,31 +45,62 @@
 <script>
 
     function buildMVCURL(controller, action, id) {
+        //If there is no controller return false
         if (controller == null) {
             return false;
         }
+        //Start URL string with /controller/
         var url = "/" + controller + "/";
+
+        //If action is available add to URL /controller/action/
         if (action != null) {
             url += action + "/";
         }
+
+        //Finally is id is available add it to URL string /controller/action/id/
         if (id != null && action != null) {
             url += id + "/";
         }
+
+        //Return url string
         return url;
     }
 
+    function updateNavBar(action) {
+        //Remove active class from Nav Bar
+        $(".nav").find(".active").removeClass("active");
+        //Add active class to Nav Bar link by ID
+        if (action != null) {
+            $(".nav").find("#" + action).addClass("active");
+        } else {
+            $(".nav").find("#home").addClass("active");
+        }
+    }
+
     function getPage(controller, action, id) {
+        //Build URL
        var url = buildMVCURL(controller, action, id);
+        //Write parameters to data object for navigation history
        var data = { Controller: controller, Action: action, ID: id };
+        //Load url into the DOM at ID #spaBody
        $("#spaBody").load(url);
+        //Push History to address bar with data for history navigation
        window.history.pushState(data, null, url);
+        //Collapse navbar in mobile view
        $(".navbar-collapse").collapse('hide');
+        //Update Bootstrap Nav Bar state
+        updateNavBar(action);
     }
 
     window.addEventListener('popstate', function(e) {
-        console.log(e);
+        //build URL from back button history state
         var url = buildMVCURL(e.state.Controller, e.state.Action, e.state.ID);
+        //Load url into the DOM at ID #spaBody
         $("#spaBody").load(url);
+        //Remove active class from Nav Bar
+        $(".nav").find(".active").removeClass("active");
+        //Update Bootstrap Nav Bar state
+        updateNavBar(e.state.Action);
     });
 
 </script>
