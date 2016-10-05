@@ -15,6 +15,11 @@ namespace MVCSpa.Controllers
 
         public ActionResult SpaTest()
         {
+            ViewBag.AjaxRequest = false;
+            if (Request.IsAjaxRequest())
+            {
+                ViewBag.AjaxRequest = true;
+            }
             return View();
         }
 

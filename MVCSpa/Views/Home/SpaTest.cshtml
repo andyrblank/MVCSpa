@@ -1,11 +1,13 @@
-﻿@{
-    Layout = null;
-}
-
-    <div>
-        <div class="jumbotron">
-            <h1>Spa Test!</h1>
-            <p class="lead">I am content that was loaded via Ajax!</p>
-        </div>
+﻿<div>
+    <div class="jumbotron">
+        <h1>Spa Test!</h1>
+        <p class="lead">
+            I am content that was loaded via
+            @if (ViewBag.AjaxRequest)
+            {<Text>Ajax</Text>}
+            else
+            {<text>full get request to server</text>} !
+        </p>
     </div>
+</div>
 

@@ -17,35 +17,50 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("DotNet SPA", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li><a href="#" id="spaLink">SpaTest</a></li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li><a href="javascript:getPage('home')">Home</a></li>
+                    <li><a href="javascript:getPage('home','SpaTest')">SpaTest</a></li>
+                    <li><a href="javascript:getPage('home','About')">About</a></li>
+                    <li><a href="javascript:getPage('home','Contact')">Contact</a></li>
                 </ul>
-                @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
-    <div id="spaBody" class="container body-content">
+<div class="container body-content" >
+    <div id="spaBody">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
     </div>
+    <hr/>
+    <footer>
+        <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+    </footer>
+</div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 <script>
-    $("#spaLink").click(function() {
-        $("#spaBody").load("@Url.Action("SpaTest","Home")");
-    });
-    
+    function getPage(controller, action, id) {
+        if (controller==null) {
+            return false;
+        }
+
+        var url = "/" + controller + "/";
+
+        if (action != null) {
+            url += action + "/";
+        }
+
+        if (id != null && action != null) {
+            url += id + "/";
+        }
+       
+        $("#spaBody").load(url);
+        window.history.pushState(action, null, url);
+    }
 </script>
 </body>
 </html>
