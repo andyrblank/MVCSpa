@@ -17,7 +17,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("DotNet SPA", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <a href="javascript:getPage('home')" class="navbar-brand">DotNet SPA</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -43,24 +43,35 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 <script>
-    function getPage(controller, action, id) {
-        if (controller==null) {
+
+    function buildMVCURL(controller, action, id) {
+        if (controller == null) {
             return false;
         }
-
         var url = "/" + controller + "/";
-
         if (action != null) {
             url += action + "/";
         }
-
         if (id != null && action != null) {
             url += id + "/";
         }
-       
-        $("#spaBody").load(url);
-        window.history.pushState(action, null, url);
+        return url;
     }
+
+    function getPage(controller, action, id) {
+       var url = buildMVCURL(controller, action, id);
+       var data = { Controller: controller, Action: action, ID: id };
+       $("#spaBody").load(url);
+       window.history.pushState(data, null, url);
+       $(".navbar-collapse").collapse('hide');
+    }
+
+    window.addEventListener('popstate', function(e) {
+        console.log(e);
+        var url = buildMVCURL(e.state.Controller, e.state.Action, e.state.ID);
+        $("#spaBody").load(url);
+    });
+
 </script>
 </body>
 </html>
