@@ -9,26 +9,24 @@
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-dark fixed-top bg-dark" >
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">                    
+                    <span class="navbar-toggler-icon"></span>
                 </button>
                 <a href="javascript:getPage('home')" class="navbar-brand">DotNet SPA</a>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li id="home"><a href="javascript:getPage('home')">Home</a></li>
-                    <li id="SpaTest"><a href="javascript:getPage('home','SpaTest')">SpaTest</a></li>
-                    <li id="About"><a href="javascript:getPage('home','About')">About</a></li>
-                    <li id="Contact"><a href="javascript:getPage('home','Contact')">Contact</a></li>
+            <div class="navbar-collapse collapse" id="navbarSupportedContent">
+                <ul class="nav navbar-nav" mr-auto>
+                    <li id="home" class="nav-item"><a href="javascript:getPage('home')" class="nav-link">Home</a></li>
+                    <li id="SpaTest" class="nav-item"><a href="javascript:getPage('home','SpaTest')" class="nav-link">SpaTest</a></li>
+                    <li id="About" class="nav-item"><a href="javascript:getPage('home','About')" class="nav-link">About</a></li>
+                    <li id="Contact" class="nav-item"><a href="javascript:getPage('home','Contact')" class="nav-link">Contact</a></li>
                 </ul>
             </div>
         </div>
-    </div>
+    </nav>
 <div class="container body-content" >
     <div id="spaBody">
         @RenderBody()
